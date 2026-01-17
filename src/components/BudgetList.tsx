@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button"; // Import Button
 
 interface Budget {
   id: number;
@@ -18,9 +19,11 @@ interface Budget {
 
 interface BudgetListProps {
   budgets: Budget[];
+  onDeleteBudget: (id: number) => void; // Assuming delete functionality might be added later
+  onEditBudget: (budget: Budget) => void; // Add callback for editing
 }
 
-const BudgetList: React.FC<BudgetListProps> = ({ budgets }) => {
+const BudgetList: React.FC<BudgetListProps> = ({ budgets, onDeleteBudget, onEditBudget }) => {
   return (
     <Card>
       <CardHeader>
@@ -33,18 +36,39 @@ const BudgetList: React.FC<BudgetListProps> = ({ budgets }) => {
             <TableRow>
               <TableHead>Category</TableHead>
               <TableHead>Budgeted Amount</TableHead>
+              <TableHead>Actions</TableHead> {/* Add Actions header */}
             </TableRow>
           </TableHeader>
           <TableBody>
             {budgets.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={2} className="text-center text-muted-foreground">No budgets set yet.</TableCell>
+                <TableCell colSpan={3} className="text-center text-muted-foreground">No budgets set yet.</TableCell>
               </TableRow>
             ) : (
               budgets.map((budget) => (
                 <TableRow key={budget.id}>
                   <TableCell>{budget.category}</TableCell>
                   <TableCell>${budget.amount.toFixed(2)}</TableCell>
+                  <TableCell className="flex space-x-2">
+                    {/* Edit Button */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onEditBudget(budget)} // Pass the entire budget object
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      Edit
+                    </Button>
+                    {/* Delete Button (Optional for now) */}
+                    {/* <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onDeleteBudget(budget.id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      Delete
+                    </Button> */}
+                  </TableCell>
                 </TableRow>
               ))
             )}

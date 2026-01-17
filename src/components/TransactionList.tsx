@@ -21,7 +21,7 @@ interface Transaction {
 interface TransactionListProps {
   transactions: Transaction[];
   onDeleteTransaction: (id: number) => void; // Add callback for deletion
-  onEditTransaction: (id: number) => void; // Add callback for editing
+  onEditTransaction: (transaction: Transaction) => void; // Modified to pass the whole transaction
 }
 
 const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDeleteTransaction, onEditTransaction }) => {
@@ -67,7 +67,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDelet
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => onEditTransaction(transaction.id)}
+                      onClick={() => onEditTransaction(transaction)} // Pass the entire transaction object
                       className="text-blue-600 hover:text-blue-800"
                     >
                       Edit
