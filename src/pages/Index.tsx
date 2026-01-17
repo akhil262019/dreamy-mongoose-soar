@@ -166,7 +166,7 @@ const IndexPage: React.FC = () => {
 
   // Function to close the edit goal modal
   const handleCloseEditGoalModal = () => {
-    setIsEditingGoalModalto be false);
+    setIsEditingGoalModalOpen(false); // Corrected typo here
     setEditingGoal(null);
   };
 
