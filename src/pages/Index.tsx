@@ -3,8 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import TransactionForm from "@/components/TransactionForm";
 import TransactionList from "@/components/TransactionList";
-import BudgetForm from "@/components/BudgetForm"; // Import BudgetForm
-import BudgetList from "@/components/BudgetList"; // Import BudgetList
+import BudgetForm from "@/components/BudgetForm";
+import BudgetList from "@/components/BudgetList";
+import GoalForm from "@/components/GoalForm"; // Import GoalForm
+import GoalList from "@/components/GoalList"; // Import GoalList
 
 // Placeholder component for financial summary
 const FinancialSummary: React.FC = () => {
@@ -38,6 +40,15 @@ interface Budget {
   amount: number;
 }
 
+// Define the structure for a goal
+interface Goal {
+  id: number;
+  name: string;
+  targetAmount: number;
+  savedAmount: number;
+  deadline?: string;
+}
+
 const IndexPage: React.FC = () => {
   // State for transactions
   const [transactions, setTransactions] = useState<Transaction[]>([
@@ -52,6 +63,12 @@ const IndexPage: React.FC = () => {
     { id: 1, category: "Groceries", amount: 400 },
     { id: 2, category: "Rent", amount: 1200 },
     { id: 3, category: "Utilities", amount: 200 },
+  ]);
+
+  // State for goals
+  const [goals, setGoals] = useState<Goal[]>([
+    { id: 1, name: "Emergency Fund", targetAmount: 5000, savedAmount: 1200, deadline: "2024-12-31" },
+    { id: 2, name: "New Car", targetAmount: 20000, savedAmount: 3500, deadline: "2025-06-30" },
   ]);
 
   // Function to add a new transaction
@@ -72,18 +89,30 @@ const IndexPage: React.FC = () => {
     setBudgets([...budgets, newBudget]);
   };
 
+  // Function to add a new goal
+  const handleAddGoal = (newGoalData: Omit<Goal, "id" | "savedAmount">) => {
+    const newGoal: Goal = {
+      id: goals.length > 0 ? goals[goals.length - 1].id + 1 : 1,
+      savedAmount: 0, // New goals start with 0 saved amount
+      ...newGoalData,
+    };
+    setGoals([...goals, newGoal]);
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Financial Planner Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
         <FinancialSummary />
         <TransactionForm onAddTransaction={handleAddTransaction} />
-        <BudgetForm onAddBudget={handleAddBudget} /> {/* Add BudgetForm */}
+        <BudgetForm onAddBudget={handleAddBudget} />
+        <GoalForm onAddGoal={handleAddGoal} /> {/* Add GoalForm */}
       </div>
 
       <div className="grid grid-cols-1 gap-6">
         <TransactionList transactions={transactions} />
-        <BudgetList budgets={budgets} /> {/* Add BudgetList */}
+        <BudgetList budgets={budgets} />
+        <GoalList goals={goals} /> {/* Add GoalList */}
       </div>
     </div>
   );
