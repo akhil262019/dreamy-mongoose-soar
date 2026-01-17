@@ -112,6 +112,11 @@ const IndexPage: React.FC = () => {
     setBudgets([...budgets, newBudget]);
   };
 
+  // Function to delete a budget
+  const handleDeleteBudget = (id: number) => {
+    setBudgets(budgets.filter(budget => budget.id !== id));
+  };
+
   // Function to open the edit modal with budget data
   const handleEditBudget = (budget: Budget) => {
     setEditingBudget(budget);
@@ -141,6 +146,11 @@ const IndexPage: React.FC = () => {
     setGoals([...goals, newGoal]);
   };
 
+  // Function to delete a goal
+  const handleDeleteGoal = (id: number) => {
+    setGoals(goals.filter(goal => goal.id !== id));
+  };
+
   // Function to open the edit modal with goal data
   const handleEditGoal = (goal: Goal) => {
     setEditingGoal(goal);
@@ -156,7 +166,7 @@ const IndexPage: React.FC = () => {
 
   // Function to close the edit goal modal
   const handleCloseEditGoalModal = () => {
-    setIsEditingGoalModalOpen(false);
+    setIsEditingGoalModalto be false);
     setEditingGoal(null);
   };
 
@@ -178,12 +188,12 @@ const IndexPage: React.FC = () => {
         /> {/* Pass delete and edit handlers */}
         <BudgetList
           budgets={budgets}
-          onDeleteBudget={() => {}} // Placeholder for delete budget
+          onDeleteBudget={handleDeleteBudget} // Pass delete handler
           onEditBudget={handleEditBudget} // Pass edit handler
         /> {/* Pass delete and edit handlers */}
         <GoalList
           goals={goals}
-          onDeleteGoal={() => {}} // Placeholder for delete goal
+          onDeleteGoal={handleDeleteGoal} // Pass delete handler
           onEditGoal={handleEditGoal} // Pass edit handler
         /> {/* Pass delete and edit handlers */}
       </div>

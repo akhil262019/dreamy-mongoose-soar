@@ -19,7 +19,7 @@ interface Budget {
 
 interface BudgetListProps {
   budgets: Budget[];
-  onDeleteBudget: (id: number) => void; // Assuming delete functionality might be added later
+  onDeleteBudget: (id: number) => void; // Implement delete callback
   onEditBudget: (budget: Budget) => void; // Add callback for editing
 }
 
@@ -59,15 +59,15 @@ const BudgetList: React.FC<BudgetListProps> = ({ budgets, onDeleteBudget, onEdit
                     >
                       Edit
                     </Button>
-                    {/* Delete Button (Optional for now) */}
-                    {/* <Button
+                    {/* Delete Button */}
+                    <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => onDeleteBudget(budget.id)}
+                      onClick={() => onDeleteBudget(budget.id)} // Call delete handler
                       className="text-red-600 hover:text-red-800"
                     >
                       Delete
-                    </Button> */}
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))

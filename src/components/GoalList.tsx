@@ -22,7 +22,7 @@ interface Goal {
 
 interface GoalListProps {
   goals: Goal[];
-  onDeleteGoal: (id: number) => void; // Assuming delete functionality might be added later
+  onDeleteGoal: (id: number) => void; // Implement delete callback
   onEditGoal: (goal: Goal) => void; // Add callback for editing
 }
 
@@ -75,15 +75,15 @@ const GoalList: React.FC<GoalListProps> = ({ goals, onDeleteGoal, onEditGoal }) 
                     >
                       Edit
                     </Button>
-                    {/* Delete Button (Optional for now) */}
-                    {/* <Button
+                    {/* Delete Button */}
+                    <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => onDeleteGoal(goal.id)}
+                      onClick={() => onDeleteGoal(goal.id)} // Call delete handler
                       className="text-red-600 hover:text-red-800"
                     >
                       Delete
-                    </Button> */}
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))
