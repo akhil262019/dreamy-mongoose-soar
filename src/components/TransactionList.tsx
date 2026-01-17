@@ -21,9 +21,10 @@ interface Transaction {
 interface TransactionListProps {
   transactions: Transaction[];
   onDeleteTransaction: (id: number) => void; // Add callback for deletion
+  onEditTransaction: (id: number) => void; // Add callback for editing
 }
 
-const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDeleteTransaction }) => {
+const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDeleteTransaction, onEditTransaction }) => {
   const getAmountColorClass = (type: "income" | "expense", amount: number) => {
     if (type === "income") return "text-green-600";
     return "text-red-600";
@@ -61,7 +62,16 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDelet
                   <TableCell className={transaction.type === "income" ? "text-green-600" : "text-red-600"}>
                     {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="flex space-x-2">
+                    {/* Edit Button */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onEditTransaction(transaction.id)}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      Edit
+                    </Button>
                     {/* Delete Button */}
                     <Button
                       variant="outline"
@@ -71,8 +81,6 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDelet
                     >
                       Delete
                     </Button>
-                    {/* Edit Button (placeholder for now) */}
-                    {/* <Button variant="outline" size="sm" className="ml-2">Edit</Button> */}
                   </TableCell>
                 </TableRow>
               ))

@@ -69,6 +69,12 @@ const IndexPage: React.FC = () => {
     setTransactions(transactions.filter(transaction => transaction.id !== id));
   };
 
+  // Function to handle editing a transaction (currently logs the ID)
+  const handleEditTransaction = (id: number) => {
+    console.log("Editing transaction with ID:", id);
+    // TODO: Implement actual editing logic, e.g., open a modal or populate the form
+  };
+
   // Function to add a new budget
   const handleAddBudget = (newBudgetData: Omit<Budget, "id">) => {
     const newBudget: Budget = {
@@ -99,7 +105,11 @@ const IndexPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        <TransactionList transactions={transactions} onDeleteTransaction={handleDeleteTransaction} /> {/* Pass delete handler */}
+        <TransactionList
+          transactions={transactions}
+          onDeleteTransaction={handleDeleteTransaction}
+          onEditTransaction={handleEditTransaction} // Pass edit handler
+        /> {/* Pass delete and edit handlers */}
         <BudgetList budgets={budgets} />
         <GoalList goals={goals} />
       </div>
