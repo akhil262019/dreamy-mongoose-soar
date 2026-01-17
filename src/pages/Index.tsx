@@ -5,25 +5,8 @@ import TransactionForm from "@/components/TransactionForm";
 import TransactionList from "@/components/TransactionList";
 import BudgetForm from "@/components/BudgetForm";
 import BudgetList from "@/components/BudgetList";
-import GoalForm from "@/components/GoalForm"; // Import GoalForm
-import GoalList from "@/components/GoalList"; // Import GoalList
-
-// Placeholder component for financial summary
-const FinancialSummary: React.FC = () => {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Financial Overview</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-lg">Current Balance: $10,000.00</p>
-        <p className="text-muted-foreground">Income This Month: $5,000.00</p>
-        <p className="text-muted-foreground">Expenses This Month: $3,000.00</p>
-        <Button className="mt-4">View Details</Button>
-      </CardContent>
-    </Card>
-  );
-};
+import GoalForm from "@/components/GoalForm";
+import GoalList from "@/components/GoalList";
 
 // Define the structure for a transaction
 interface Transaction {
@@ -48,6 +31,38 @@ interface Goal {
   savedAmount: number;
   deadline?: string;
 }
+
+// Define props for FinancialSummary
+interface FinancialSummaryProps {
+  transactions: Transaction[];
+}
+
+// Updated FinancialSummary component
+const FinancialSummary: React.FC<FinancialSummaryProps> = ({ transactions }) => {
+  const totalIncome = transactions
+    .filter((t) => t.type === "income")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const totalExpenses = transactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const currentBalance = totalIncome - totalExpenses;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Financial Overview</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-lg font-semibold">Current Balance: ${currentBalance.toFixed(2)}</p>
+        <p className="text-green-600">Income This Month: +${totalIncome.toFixed(2)}</p>
+        <p className="text-red-600">Expenses This Month: -${totalExpenses.toFixed(2)}</p>
+        <Button className="mt-4">View Details</Button>
+      </CardContent>
+    </Card>
+  );
+};
 
 const IndexPage: React.FC = () => {
   // State for transactions
@@ -103,16 +118,16 @@ const IndexPage: React.FC = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Financial Planner Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-        <FinancialSummary />
+        <FinancialSummary transactions={transactions} /> {/* Pass transactions */}
         <TransactionForm onAddTransaction={handleAddTransaction} />
         <BudgetForm onAddBudget={handleAddBudget} />
-        <GoalForm onAddGoal={handleAddGoal} /> {/* Add GoalForm */}
+        <GoalForm onAddGoal={handleAddGoal} />
       </div>
 
       <div className="grid grid-cols-1 gap-6">
         <TransactionList transactions={transactions} />
         <BudgetList budgets={budgets} />
-        <GoalList goals={goals} /> {/* Add GoalList */}
+        <GoalList goals={goals} />
       </div>
     </div>
   );
