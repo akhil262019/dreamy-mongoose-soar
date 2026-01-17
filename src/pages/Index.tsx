@@ -9,7 +9,8 @@ import GoalForm from "@/components/GoalForm";
 import GoalList from "@/components/GoalList";
 import FinancialSummary from "@/components/FinancialSummary";
 import EditTransactionModal from "@/components/EditTransactionModal";
-import EditBudgetModal from "@/components/EditBudgetModal"; // Import the budget edit modal
+import EditBudgetModal from "@/components/EditBudgetModal";
+import EditGoalModal from "@/components/EditGoalModal"; // Import the goal edit modal
 
 // Define the structure for a transaction
 interface Transaction {
@@ -65,6 +66,9 @@ const IndexPage: React.FC = () => {
   const [isEditingBudgetModalOpen, setIsEditingBudgetModalOpen] = useState(false);
   const [editingBudget, setEditingBudget] = useState<Budget | null>(null);
 
+  // State for editing goal modal
+  const [isEditingGoalModalOpen, setIsEditingGoalModalOpen] = useState(false);
+  const [editingGoal, setEditingGoal] = useState<Goal | null>(null);
 
   // Function to add a new transaction
   const handleAddTransaction = (newTransactionData: Omit<Transaction, "id">) => {
@@ -99,6 +103,15 @@ const IndexPage: React.FC = () => {
     setEditingTransaction(null);
   };
 
+  // Function to add a new budget
+  const handleAddBudget = (newBudgetData: Omit<Budget, "id">) => {
+    const newBudget: Budget = {
+      id: budgets.length > 0 ? budgets[budgets.length - 1].id + 1 : 1,
+      ...newBudgetData,
+    };
+    setBudgets([...budgets, newBudget]);
+  };
+
   // Function to open the edit modal with budget data
   const handleEditBudget = (budget: Budget) => {
     setEditingBudget(budget);
@@ -118,15 +131,6 @@ const IndexPage: React.FC = () => {
     setEditingBudget(null);
   };
 
-  // Function to add a new budget
-  const handleAddBudget = (newBudgetData: Omit<Budget, "id">) => {
-    const newBudget: Budget = {
-      id: budgets.length > 0 ? budgets[budgets.length - 1].id + 1 : 1,
-      ...newBudgetData,
-    };
-    setBudgets([...budgets, newBudget]);
-  };
-
   // Function to add a new goal
   const handleAddGoal = (newGoalData: Omit<Goal, "id" | "savedAmount">) => {
     const newGoal: Goal = {
@@ -135,6 +139,25 @@ const IndexPage: React.FC = () => {
       ...newGoalData,
     };
     setGoals([...goals, newGoal]);
+  };
+
+  // Function to open the edit modal with goal data
+  const handleEditGoal = (goal: Goal) => {
+    setEditingGoal(goal);
+    setIsEditingGoalModalOpen(true);
+  };
+
+  // Function to save edited goal
+  const handleSaveEditGoal = (updatedGoal: Goal) => {
+    setGoals(goals.map(g => (g.id === updatedGoal.id ? updatedGoal : g)));
+    setIsEditingGoalModalOpen(false);
+    setEditingGoal(null);
+  };
+
+  // Function to close the edit goal modal
+  const handleCloseEditGoalModal = () => {
+    setIsEditingGoalModalOpen(false);
+    setEditingGoal(null);
   };
 
   return (
@@ -158,7 +181,11 @@ const IndexPage: React.FC = () => {
           onDeleteBudget={() => {}} // Placeholder for delete budget
           onEditBudget={handleEditBudget} // Pass edit handler
         /> {/* Pass delete and edit handlers */}
-        <GoalList goals={goals} />
+        <GoalList
+          goals={goals}
+          onDeleteGoal={() => {}} // Placeholder for delete goal
+          onEditGoal={handleEditGoal} // Pass edit handler
+        /> {/* Pass delete and edit handlers */}
       </div>
 
       {/* Render the EditTransactionModal */}
@@ -175,6 +202,14 @@ const IndexPage: React.FC = () => {
         isOpen={isEditingBudgetModalOpen}
         onClose={handleCloseEditBudgetModal}
         onSave={handleSaveEditBudget}
+      />
+
+      {/* Render the EditGoalModal */}
+      <EditGoalModal
+        goalToEdit={editingGoal}
+        isOpen={isEditingGoalModalOpen}
+        onClose={handleCloseEditGoalModal}
+        onSave={handleSaveEditGoal}
       />
     </div>
   );

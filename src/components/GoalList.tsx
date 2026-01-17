@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress"; // Import Progress component
+import { Button } from "@/components/ui/button"; // Import Button
 
 interface Goal {
   id: number;
@@ -21,9 +22,11 @@ interface Goal {
 
 interface GoalListProps {
   goals: Goal[];
+  onDeleteGoal: (id: number) => void; // Assuming delete functionality might be added later
+  onEditGoal: (goal: Goal) => void; // Add callback for editing
 }
 
-const GoalList: React.FC<GoalListProps> = ({ goals }) => {
+const GoalList: React.FC<GoalListProps> = ({ goals, onDeleteGoal, onEditGoal }) => {
   const getProgress = (goal: Goal): number => {
     if (goal.targetAmount === 0) return 0;
     return Math.min(100, (goal.savedAmount / goal.targetAmount) * 100);
@@ -44,12 +47,13 @@ const GoalList: React.FC<GoalListProps> = ({ goals }) => {
               <TableHead>Saved Amount</TableHead>
               <TableHead>Progress</TableHead>
               <TableHead>Deadline</TableHead>
+              <TableHead>Actions</TableHead> {/* Add Actions header */}
             </TableRow>
           </TableHeader>
           <TableBody>
             {goals.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground">No goals set yet.</TableCell>
+                <TableCell colSpan={6} className="text-center text-muted-foreground">No goals set yet.</TableCell>
               </TableRow>
             ) : (
               goals.map((goal) => (
@@ -61,6 +65,26 @@ const GoalList: React.FC<GoalListProps> = ({ goals }) => {
                     <Progress value={getProgress(goal)} className="w-[150px]" />
                   </TableCell>
                   <TableCell>{goal.deadline ? new Date(goal.deadline).toLocaleDateString() : "N/A"}</TableCell>
+                  <TableCell className="flex space-x-2">
+                    {/* Edit Button */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onEditGoal(goal)} // Pass the entire goal object
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      Edit
+                    </Button>
+                    {/* Delete Button (Optional for now) */}
+                    {/* <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onDeleteGoal(goal.id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      Delete
+                    </Button> */}
+                  </TableCell>
                 </TableRow>
               ))
             )}
