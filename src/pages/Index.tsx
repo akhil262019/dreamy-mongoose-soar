@@ -7,6 +7,7 @@ import BudgetForm from "@/components/BudgetForm";
 import BudgetList from "@/components/BudgetList";
 import GoalForm from "@/components/GoalForm";
 import GoalList from "@/components/GoalList";
+import FinancialSummary from "@/components/FinancialSummary"; // Import FinancialSummary
 
 // Define the structure for a transaction
 interface Transaction {
@@ -31,38 +32,6 @@ interface Goal {
   savedAmount: number;
   deadline?: string;
 }
-
-// Define props for FinancialSummary
-interface FinancialSummaryProps {
-  transactions: Transaction[];
-}
-
-// Updated FinancialSummary component
-const FinancialSummary: React.FC<FinancialSummaryProps> = ({ transactions }) => {
-  const totalIncome = transactions
-    .filter((t) => t.type === "income")
-    .reduce((sum, t) => sum + t.amount, 0);
-
-  const totalExpenses = transactions
-    .filter((t) => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0);
-
-  const currentBalance = totalIncome - totalExpenses;
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Financial Overview</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-lg font-semibold">Current Balance: ${currentBalance.toFixed(2)}</p>
-        <p className="text-green-600">Income This Month: +${totalIncome.toFixed(2)}</p>
-        <p className="text-red-600">Expenses This Month: -${totalExpenses.toFixed(2)}</p>
-        <Button className="mt-4">View Details</Button>
-      </CardContent>
-    </Card>
-  );
-};
 
 const IndexPage: React.FC = () => {
   // State for transactions
@@ -95,6 +64,11 @@ const IndexPage: React.FC = () => {
     setTransactions([...transactions, newTransaction]);
   };
 
+  // Function to delete a transaction
+  const handleDeleteTransaction = (id: number) => {
+    setTransactions(transactions.filter(transaction => transaction.id !== id));
+  };
+
   // Function to add a new budget
   const handleAddBudget = (newBudgetData: Omit<Budget, "id">) => {
     const newBudget: Budget = {
@@ -125,7 +99,7 @@ const IndexPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        <TransactionList transactions={transactions} />
+        <TransactionList transactions={transactions} onDeleteTransaction={handleDeleteTransaction} /> {/* Pass delete handler */}
         <BudgetList budgets={budgets} />
         <GoalList goals={goals} />
       </div>

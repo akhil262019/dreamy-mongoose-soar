@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button"; // Import Button
 
 interface Transaction {
   id: number;
@@ -19,9 +20,10 @@ interface Transaction {
 
 interface TransactionListProps {
   transactions: Transaction[];
+  onDeleteTransaction: (id: number) => void; // Add callback for deletion
 }
 
-const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
+const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDeleteTransaction }) => {
   const getAmountColorClass = (type: "income" | "expense", amount: number) => {
     if (type === "income") return "text-green-600";
     return "text-red-600";
@@ -40,12 +42,13 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
               <TableHead>Description</TableHead>
               <TableHead>Amount</TableHead>
               <TableHead>Type</TableHead>
+              <TableHead>Actions</TableHead> {/* Add Actions header */}
             </TableRow>
           </TableHeader>
           <TableBody>
             {transactions.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={3} className="text-center text-muted-foreground">No transactions yet.</TableCell>
+                <TableCell colSpan={4} className="text-center text-muted-foreground">No transactions yet.</TableCell>
               </TableRow>
             ) : (
               transactions.map((transaction) => (
@@ -57,6 +60,19 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
                   </TableCell>
                   <TableCell className={transaction.type === "income" ? "text-green-600" : "text-red-600"}>
                     {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
+                  </TableCell>
+                  <TableCell>
+                    {/* Delete Button */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onDeleteTransaction(transaction.id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      Delete
+                    </Button>
+                    {/* Edit Button (placeholder for now) */}
+                    {/* <Button variant="outline" size="sm" className="ml-2">Edit</Button> */}
                   </TableCell>
                 </TableRow>
               ))
