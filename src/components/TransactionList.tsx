@@ -22,18 +22,13 @@ interface TransactionListProps {
   transactions: Transaction[];
   onDeleteTransaction: (id: number) => void; // Add callback for deletion
   onEditTransaction: (transaction: Transaction) => void; // Modified to pass the whole transaction
+  // Confirmation dialog props will be managed by the parent component
 }
 
 const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDeleteTransaction, onEditTransaction }) => {
   const getAmountColorClass = (type: "income" | "expense", amount: number) => {
     if (type === "income") return "text-green-600";
     return "text-red-600";
-  };
-
-  const handleDeleteClick = (id: number) => {
-    if (window.confirm("Are you sure you want to delete this transaction?")) {
-      onDeleteTransaction(id);
-    }
   };
 
   return (
@@ -82,7 +77,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDelet
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleDeleteClick(transaction.id)} // Use confirmation handler
+                      onClick={() => onDeleteTransaction(transaction.id)} // Direct call to parent handler
                       className="text-red-600 hover:text-red-800"
                     >
                       Delete

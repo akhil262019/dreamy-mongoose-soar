@@ -24,18 +24,13 @@ interface GoalListProps {
   goals: Goal[];
   onDeleteGoal: (id: number) => void; // Implement delete callback
   onEditGoal: (goal: Goal) => void; // Add callback for editing
+  // Confirmation dialog props will be managed by the parent component
 }
 
 const GoalList: React.FC<GoalListProps> = ({ goals, onDeleteGoal, onEditGoal }) => {
   const getProgress = (goal: Goal): number => {
     if (goal.targetAmount === 0) return 0;
     return Math.min(100, (goal.savedAmount / goal.targetAmount) * 100);
-  };
-
-  const handleDeleteClick = (id: number) => {
-    if (window.confirm("Are you sure you want to delete this goal?")) {
-      onDeleteGoal(id);
-    }
   };
 
   return (
@@ -85,7 +80,7 @@ const GoalList: React.FC<GoalListProps> = ({ goals, onDeleteGoal, onEditGoal }) 
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleDeleteClick(goal.id)} // Use confirmation handler
+                      onClick={() => onDeleteGoal(goal.id)} // Direct call to parent handler
                       className="text-red-600 hover:text-red-800"
                     >
                       Delete

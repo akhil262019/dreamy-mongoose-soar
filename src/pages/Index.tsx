@@ -10,7 +10,8 @@ import GoalList from "@/components/GoalList";
 import FinancialSummary from "@/components/FinancialSummary";
 import EditTransactionModal from "@/components/EditTransactionModal";
 import EditBudgetModal from "@/components/EditBudgetModal";
-import EditGoalModal from "@/components/EditGoalModal"; // Import the goal edit modal
+import EditGoalModal from "@/components/EditGoalModal";
+import ConfirmationDialog from "@/components/ConfirmationDialog"; // Import ConfirmationDialog
 
 // Define the structure for a transaction
 interface Transaction {
@@ -36,7 +37,7 @@ interface Goal {
   deadline?: string;
 }
 
-const IndexPage: React.FC = () => {
+const IndexPage: React.FC= () => {
   // State for transactions
   const [transactions, setTransactions] = useState<Transaction[]>([
     { id: 1, description: "Salary", amount: 3000, type: "income" },
@@ -70,7 +71,12 @@ const IndexPage: React.FC = () => {
   const [isEditingGoalModalOpen, setIsEditingGoalModalOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState<Goal | null>(null);
 
-  // Function to add a new transaction
+  // State for confirmation dialogs
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
+  const [deleteItemType, setDeleteItemType] = useState<"transaction" | "budget" | "goal" | null>(null);
+
+  // --- Transaction Handlers ---
   const handleAddTransaction = (newTransactionData: Omit<Transaction, "id">) => {
     const newTransaction: Transaction = {
       id: transactions.length > 0 ? transactions[transactions.length - 1].id + 1 : 1,
@@ -79,31 +85,29 @@ const IndexPage: React.FC = () => {
     setTransactions([...transactions, newTransaction]);
   };
 
-  // Function to delete a transaction
   const handleDeleteTransaction = (id: number) => {
-    setTransactions(transactions.filter(transaction => transaction.id !== id));
+    setDeleteItemId(id);
+    setDeleteItemType("transaction");
+    setIsConfirmDialogOpen(true);
   };
 
-  // Function to open the edit modal with transaction data
   const handleEditTransaction = (transaction: Transaction) => {
     setEditingTransaction(transaction);
     setIsEditingModalOpen(true);
   };
 
-  // Function to save edited transaction
   const handleSaveEditTransaction = (updatedTransaction: Transaction) => {
     setTransactions(transactions.map(t => (t.id === updatedTransaction.id ? updatedTransaction : t)));
     setIsEditingModalOpen(false);
     setEditingTransaction(null);
   };
 
-  // Function to close the edit modal
   const handleCloseEditModal = () => {
     setIsEditingModalOpen(false);
     setEditingTransaction(null);
   };
 
-  // Function to add a new budget
+  // --- Budget Handlers ---
   const handleAddBudget = (newBudgetData: Omit<Budget, "id">) => {
     const newBudget: Budget = {
       id: budgets.length > 0 ? budgets[budgets.length - 1].id + 1 : 1,
@@ -112,31 +116,29 @@ const IndexPage: React.FC = () => {
     setBudgets([...budgets, newBudget]);
   };
 
-  // Function to delete a budget
   const handleDeleteBudget = (id: number) => {
-    setBudgets(budgets.filter(budget => budget.id !== id));
+    setDeleteItemId(id);
+    setDeleteItemType("budget");
+    setIsConfirmDialogOpen(true);
   };
 
-  // Function to open the edit modal with budget data
   const handleEditBudget = (budget: Budget) => {
     setEditingBudget(budget);
     setIsEditingBudgetModalOpen(true);
   };
 
-  // Function to save edited budget
   const handleSaveEditBudget = (updatedBudget: Budget) => {
     setBudgets(budgets.map(b => (b.id === updatedBudget.id ? updatedBudget : b)));
     setIsEditingBudgetModalOpen(false);
     setEditingBudget(null);
   };
 
-  // Function to close the edit budget modal
   const handleCloseEditBudgetModal = () => {
     setIsEditingBudgetModalOpen(false);
     setEditingBudget(null);
   };
 
-  // Function to add a new goal
+  // --- Goal Handlers ---
   const handleAddGoal = (newGoalData: Omit<Goal, "id" | "savedAmount">) => {
     const newGoal: Goal = {
       id: goals.length > 0 ? goals[goals.length - 1].id + 1 : 1,
@@ -146,28 +148,55 @@ const IndexPage: React.FC = () => {
     setGoals([...goals, newGoal]);
   };
 
-  // Function to delete a goal
   const handleDeleteGoal = (id: number) => {
-    setGoals(goals.filter(goal => goal.id !== id));
+    setDeleteItemId(id);
+    setDeleteItemType("goal");
+    setIsConfirmDialogOpen(true);
   };
 
-  // Function to open the edit modal with goal data
   const handleEditGoal = (goal: Goal) => {
     setEditingGoal(goal);
     setIsEditingGoalModalOpen(true);
   };
 
-  // Function to save edited goal
   const handleSaveEditGoal = (updatedGoal: Goal) => {
     setGoals(goals.map(g => (g.id === updatedGoal.id ? updatedGoal : g)));
     setIsEditingGoalModalOpen(false);
     setEditingGoal(null);
   };
 
-  // Function to close the edit goal modal
   const handleCloseEditGoalModal = () => {
-    setIsEditingGoalModalOpen(false); // Corrected typo here
+    setIsEditingGoalModalOpen(false);
     setEditingGoal(null);
+  };
+
+  // --- Confirmation Dialog Handler ---
+  const handleConfirmDelete = () => {
+    if (deleteItemId === null || deleteItemType === null) return;
+
+    switch (deleteItemType) {
+      case "transaction":
+        setTransactions(transactions.filter(t => t.id !== deleteItemId));
+        break;
+      case "budget":
+        setBudgets(budgets.filter(b => b.id !== deleteItemId));
+        break;
+      case "goal":
+        setGoals(goals.filter(g => g.id !== deleteItemId));
+        break;
+      default:
+        break;
+    }
+    // Reset confirmation state
+    setDeleteItemId(null);
+    setDeleteItemType(null);
+    setIsConfirmDialogOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteItemId(null);
+    setDeleteItemType(null);
+    setIsConfirmDialogOpen(false);
   };
 
   return (
@@ -184,42 +213,45 @@ const IndexPage: React.FC = () => {
         <TransactionList
           transactions={transactions}
           onDeleteTransaction={handleDeleteTransaction}
-          onEditTransaction={handleEditTransaction} // Pass edit handler
-        /> {/* Pass delete and edit handlers */}
+          onEditTransaction={handleEditTransaction}
+        />
         <BudgetList
           budgets={budgets}
-          onDeleteBudget={handleDeleteBudget} // Pass delete handler
-          onEditBudget={handleEditBudget} // Pass edit handler
-        /> {/* Pass delete and edit handlers */}
+          onDeleteBudget={handleDeleteBudget}
+          onEditBudget={handleEditBudget}
+        />
         <GoalList
           goals={goals}
-          onDeleteGoal={handleDeleteGoal} // Pass delete handler
-          onEditGoal={handleEditGoal} // Pass edit handler
-        /> {/* Pass delete and edit handlers */}
+          onDeleteGoal={handleDeleteGoal}
+          onEditGoal={handleEditGoal}
+        />
       </div>
 
-      {/* Render the EditTransactionModal */}
+      {/* Modals */}
       <EditTransactionModal
         transactionToEdit={editingTransaction}
         isOpen={isEditingModalOpen}
         onClose={handleCloseEditModal}
         onSave={handleSaveEditTransaction}
       />
-
-      {/* Render the EditBudgetModal */}
       <EditBudgetModal
         budgetToEdit={editingBudget}
         isOpen={isEditingBudgetModalOpen}
         onClose={handleCloseEditBudgetModal}
         onSave={handleSaveEditBudget}
       />
-
-      {/* Render the EditGoalModal */}
       <EditGoalModal
         goalToEdit={editingGoal}
         isOpen={isEditingGoalModalOpen}
         onClose={handleCloseEditGoalModal}
         onSave={handleSaveEditGoal}
+      />
+      <ConfirmationDialog
+        isOpen={isConfirmDialogOpen}
+        title={`Delete ${deleteItemType ? deleteItemType.charAt(0).toUpperCase() + deleteItemType.slice(1) : ''}`}
+        description={`Are you sure you want to delete this ${deleteItemType || ''}? This action cannot be undone.`}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
       />
     </div>
   );

@@ -21,16 +21,10 @@ interface BudgetListProps {
   budgets: Budget[];
   onDeleteBudget: (id: number) => void; // Implement delete callback
   onEditBudget: (budget: Budget) => void; // Add callback for editing
+  // Confirmation dialog props will be managed by the parent component
 }
 
 const BudgetList: React.FC<BudgetListProps> = ({ budgets, onDeleteBudget, onEditBudget }) => {
-
-  const handleDeleteClick = (id: number) => {
-    if (window.confirm("Are you sure you want to delete this budget?")) {
-      onDeleteBudget(id);
-    }
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -70,7 +64,7 @@ const BudgetList: React.FC<BudgetListProps> = ({ budgets, onDeleteBudget, onEdit
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleDeleteClick(budget.id)} // Use confirmation handler
+                      onClick={() => onDeleteBudget(budget.id)} // Direct call to parent handler
                       className="text-red-600 hover:text-red-800"
                     >
                       Delete
