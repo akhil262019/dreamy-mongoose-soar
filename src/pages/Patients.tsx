@@ -47,7 +47,7 @@ export default function Patients() {
       return;
     }
     const patientToAdd: Patient = {
-      id: Date.now().toString(), // Simple ID generation
+      id:Date.now().toString(), // Simple ID generation
       ...newPatient,
     };
     setPatients((prev) => [...prev, patientToAdd]);
@@ -56,24 +56,24 @@ export default function Patients() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Patient Management</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">Patient Management</h1>
 
-      <div className="mb-8 p-6 border rounded-lg shadow-sm">
-        <h2 className="text-2xl font-semibold mb-4">Add New Patient</h2>
+      <div className="mb-8 p-6 border rounded-lg shadow-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-2xl">
+        <h2 className="text-2xl font-semibold mb-4 text-indigo-700">Add New Patient</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name" className="text-gray-700">Name</Label>
             <Input
               id="name"
               name="name"
               value={newPatient.name}
               onChange={handleInputChange}
               placeholder="Patient Name"
-              className="mt-1"
+              className="mt-1 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
           </div>
           <div>
-            <Label htmlFor="dob">Date of Birth</Label>
+            <Label htmlFor="dob" className="text-gray-700">Date of Birth</Label>
             <Input
               id="dob"
               name="dob"
@@ -81,39 +81,39 @@ export default function Patients() {
               value={newPatient.dob}
               onChange={handleInputChange}
               placeholder="YYYY-MM-DD"
-              className="mt-1"
+              className="mt-1 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
           </div>
           <div>
-            <Label htmlFor="contact">Contact Number</Label>
+            <Label htmlFor="contact" className="text-gray-700">Contact Number</Label>
             <Input
               id="contact"
               name="contact"
               value={newPatient.contact}
               onChange={handleInputChange}
               placeholder="Contact Number"
-              className="mt-1"
+              className="mt-1 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
           </div>
           <div>
-            <Label htmlFor="address">Address</Label>
+            <Label htmlFor="address" className="text-gray-700">Address</Label>
             <Input
               id="address"
               name="address"
               value={newPatient.address}
               onChange={handleInputChange}
               placeholder="Patient Address"
-              className="mt-1"
+              className="mt-1 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
           </div>
         </div>
-        <Button onClick={addPatient} className="mt-6">
+        <Button onClick={addPatient} className="mt-6 bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition-all duration-300 ease-in-out">
           Add Patient
         </Button>
       </div>
 
-      <div className="border rounded-lg shadow-sm">
-        <h2 className="text-2xl font-semibold p-6 pb-0">Patient List</h2>
+      <div className="border rounded-lg shadow-lg bg-white transition-shadow duration-300 ease-in-out hover:shadow-2xl">
+        <h2 className="text-2xl font-semibold p-6 pb-0 text-indigo-700">Patient List</h2>
         <Table>
           <TableCaption>A list of all registered patients.</TableCaption>
           <TableHeader>
@@ -127,14 +127,14 @@ export default function Patients() {
           </TableHeader>
           <TableBody>
             {patients.map((patient) => (
-              <TableRow key={patient.id}>
+              <TableRow key={patient.id} className="hover:bg-gray-50 transition-colors duration-200">
                 <TableCell className="font-medium">{patient.name}</TableCell>
                 <TableCell>{patient.dob}</TableCell>
                 <TableCell>{patient.contact}</TableCell>
                 <TableCell>{patient.address}</TableCell>
-                <TableCell>
-                  <Button variant="outline" size="sm">Edit</Button>
-                  <Button variant="destructive" size="sm" className="ml-2">Delete</Button>
+                <TableCell className="flex space-x-2">
+                  <Button variant="outline" size="sm" className="hover:bg-gray-100 transition-colors duration-200">Edit</Button>
+                  <Button variant="destructive" size="sm" className="hover:bg-red-600 transition-colors duration-200">Delete</Button>
                 </TableCell>
               </TableRow>
             ))}

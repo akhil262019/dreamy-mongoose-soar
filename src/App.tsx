@@ -1,7 +1,10 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 
 function App() {
+  const location = useLocation();
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-gradient-to-r from-indigo-500 to-indigo-700 shadow-md p-4">
@@ -55,7 +58,17 @@ function App() {
         </nav>
       </header>
       <main className="container mx-auto p-4">
-        <Outlet />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
       </main>
       <footer className="text-center p-4 mt-8 text-gray-500">
         © 2023 Hospital Management. All rights reserved.
