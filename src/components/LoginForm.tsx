@@ -12,15 +12,33 @@ const LoginForm: React.FC = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Login attempt:", { username, password });
-    // TODO: Implement actual login logic and authentication
-    // Based on role, navigate to the appropriate dashboard
+
+    let role: string;
+    let targetPath: string;
+
+    // Placeholder logic for role determination
     if (username === "admin" && password === "admin") {
-      navigate("/admin");
+      role = "admin";
+      targetPath = "/admin";
     } else if (username === "doctor" && password === "doctor") {
-      navigate("/doctor");
+      role = "doctor";
+      targetPath = "/doctor";
     } else {
-      navigate("/patient"); // Default to patient if not admin/doctor
+      // Assume any other valid credentials are for a patient
+      role = "patient";
+      targetPath = "/patient";
     }
+
+    // Simulate successful login by storing role in localStorage
+    // The Navbar component uses this to determine login state and role.
+    localStorage.setItem("userRole", role);
+
+    // Navigate to the appropriate dashboard
+    navigate(targetPath);
+
+    // Note: For immediate UI updates in Navbar without a page refresh,
+    // a global state management solution (like Context API or Zustand) would be needed.
+    // For this simulation, localStorage + Navbar's useEffect on next render is sufficient.
   };
 
   return (
