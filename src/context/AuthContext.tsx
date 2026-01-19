@@ -1,7 +1,7 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
 
 // Define possible user roles
-type UserRole = "doctor" | "patient" | "admin" | "guest";
+export type UserRole = "doctor" | "patient" | "admin" | "guest";
 
 // Define the structure of the user object
 interface User {
@@ -14,9 +14,12 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (userData: Omit<User, 'id'> & { role: UserRole }) => void; // Added role to login payload
+  login: (userData: Omit<User, 'id'> & { role: UserRole }) => void;
   logout: () => void;
-  role: UserRole; // Explicitly include role in context
+  role: UserRole;
+  isAdmin: boolean; // Helper for easier checks
+  isDoctor: boolean;
+  isPatient: boolean;
 }
 
 // Create the context with a default value
@@ -27,33 +30,66 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+// Default admin user that will be created if no user is found in localStorage
+const defaultAdminUser: User = { id: "admin-001", username: "system_admin", role: "admin" };
+
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [role, setRole] = useState<UserRole>("guest"); // Default role is guest
+  const [user, setUser] = useState<User | null>(() => {
+    try {
+      const storedUser = localStorage.getItem("authUser");
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        // Basic validation to ensure it's a valid user object structure
+        if (parsedUser && parsedUser.username && parsedUser.role) {
+          return parsedUser;
+        }
+      }
+    } catch (error) {
+      console.error("Failed to parse user from localStorage:", error);
+      // Clear potentially corrupted data
+      localStorage.removeItem("authUser");
+    }
+    // If no user in localStorage or parsing failed, return default admin
+    return defaultAdminUser;
+  });
+
+  const [role, setRole] = useState<UserRole>(() => user?.role || "guest");
+
+  // Effect to synchronize localStorage with user state and update role
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("authUser", JSON.stringify(user));
+      setRole(user.role);
+    } else {
+      localStorage.removeItem("authUser");
+      setRole("guest");
+    }
+  }, [user]); // Re-run effect if user changes
 
   const isAuthenticated = !!user;
+  const isAdmin = role === "admin";
+  const isDoctor = role === "doctor";
+  const isPatient = role === "patient";
 
   const login = (userData: Omit<User, 'id'> & { role: UserRole }) => {
-    // In a real app, you'd verify credentials against a backend
-    // For simulation, we'll just set the user and role
     const newUser: User = {
-      id: `user-${Date.now()}`, // Simple mock ID
+      id: `user-${Date.now()}`, // Simple mock ID generation
       username: userData.username,
       role: userData.role,
     };
     setUser(newUser);
-    setRole(userData.role);
+    // Role is set in the useEffect hook based on the new user object
     console.log(`User logged in: ${newUser.username} with role: ${newUser.role}`);
   };
 
   const logout = () => {
     setUser(null);
-    setRole("guest");
+    // Role is set to 'guest' in the useEffect hook
     console.log("User logged out");
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout, role }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout, role, isAdmin, isDoctor, isPatient }}>
       {children}
     </AuthContext.Provider>
   );
