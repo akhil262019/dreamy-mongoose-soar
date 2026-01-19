@@ -4,49 +4,49 @@ import { Button } from "@/components/ui/button";
 function App() {
   return (
     <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow-md p-4">
+      <header className="bg-gradient-to-r from-indigo-500 to-indigo-700 shadow-md p-4">
         <nav className="container mx-auto flex items-center justify-between">
-          <div className="text-xl font-bold text-blue-600">
+          <div className="text-xl font-bold text-white">
             Hospital Management
           </div>
           <ul className="flex space-x-4">
             <li>
-              <Button variant="link" asChild>
+              <Button variant="link" className="text-white hover:text-indigo-200">
                 <Link to="/">Home</Link>
               </Button>
             </li>
             <li>
-              <Button variant="link" asChild>
+              <Button variant="link" className="text-white hover:text-indigo-200">
                 <Link to="/patients">Patients</Link>
               </Button>
             </li>
             <li>
-              <Button variant="link" asChild>
+              <Button variant="link" className="text-white hover:text-indigo-200">
                 <Link to="/doctors">Doctors</Link>
               </Button>
             </li>
             <li>
-              <Button variant="link" asChild>
+              <Button variant="link" className="text-white hover:text-indigo-200">
                 <Link to="/appointments">Appointments</Link>
               </Button>
             </li>
             <li>
-              <Button variant="link" asChild>
+              <Button variant="link" className="text-white hover:text-indigo-200">
                 <Link to="/prescriptions">Prescriptions</Link>
               </Button>
             </li>
             <li>
-              <Button variant="link" asChild>
+              <Button variant="link" className="text-white hover:text-indigo-200">
                 <Link to="/medical-records">Medical Records</Link>
               </Button>
             </li>
             <li>
-              <Button variant="link" asChild>
+              <Button variant="link" className="text-white hover:text-indigo-200">
                 <Link to="/departments">Departments</Link>
               </Button>
             </li>
             <li>
-              <Button variant="link" asChild>
+              <Button variant="link" className="text-white hover:text-indigo-200">
                 <Link to="/staff">Staff Management</Link>
               </Button>
             </li>

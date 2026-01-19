@@ -3,61 +3,62 @@ import { Link } from "react-router-dom";
 
 export default function Index() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[400px] text-center p-4">
-      <h1 className="text-4xl font-bold mb-4">Welcome to the Hospital Management System</h1>
-      <p className="text-lg text-gray-600 mb-8">
-        Manage patients, appointments, doctors, and more with ease.
+    <div className="flex flex-col items-center justify-center min-h-[400px] text-center p-4 bg-gradient-to-br from-blue-50 to-purple-50">
+      <h1 className="text-5xl font-extrabold mb-4 text-indigo-700">
+        Welcome to the Hospital Management System
+      </h1>
+      <p className="text-lg text-gray-700 mb-8 max-w-2xl">
+        Manage patients, appointments, doctors, and more with ease. Our intuitive interface and robust features ensure efficient healthcare management.
       </p>
-      <div className="flex space-x-4">
-        <Button size="lg" asChild>
+      <div className="flex flex-wrap justify-center space-x-4 gap-4 mb-12">
+        <Button size="lg" asChild className="bg-indigo-600 hover:bg-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300">
           <Link to="/patients">Manage Patients</Link>
         </Button>
-        <Button size="lg" asChild>
+        <Button size="lg" asChild className="bg-teal-600 hover:bg-teal-700 shadow-lg hover:shadow-xl transition-all duration-300">
           <Link to="/doctors">Manage Doctors</Link>
         </Button>
-        <Button size="lg" asChild>
+        <Button size="lg" asChild className="bg-purple-600 hover:bg-purple-700 shadow-lg hover:shadow-xl transition-all duration-300">
           <Link to="/appointments">Schedule Appointment</Link>
         </Button>
-        <Button size="lg" asChild>
+        <Button size="lg" asChild className="bg-pink-600 hover:bg-pink-700 shadow-lg hover:shadow-xl transition-all duration-300">
           <Link to="/prescriptions">Manage Prescriptions</Link>
         </Button>
-        <Button size="lg" asChild>
+        <Button size="lg" asChild className="bg-blue-700 hover:bg-blue-800 shadow-lg hover:shadow-xl transition-all duration-300">
           <Link to="/medical-records">Medical Records</Link>
         </Button>
-        <Button size="lg" asChild>
+        <Button size="lg" asChild className="bg-green-600 hover:bg-green-700 shadow-lg hover:shadow-xl transition-all duration-300">
           <Link to="/departments">Manage Departments</Link>
         </Button>
-        <Button size="lg" asChild>
+        <Button size="lg" asChild className="bg-orange-600 hover:bg-orange-700 shadow-lg hover:shadow-xl transition-all duration-300">
           <Link to="/staff">Manage Staff</Link>
         </Button>
-        <Button size="lg" variant="outline">
+        <Button size="lg" variant="outline" className="text-indigo-700 border-indigo-700 hover:bg-indigo-50">
           View Reports
         </Button>
       </div>
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
         {/* Quick Links / Stats Section */}
-        <div className="p-6 border rounded-lg shadow-sm bg-white">
-          <h3 className="text-xl font-semibold mb-2">Quick Links</h3>
+        <div className="p-6 border rounded-lg shadow-xl bg-white transition-transform hover:-translate-y-2">
+          <h3 className="text-2xl font-bold mb-4 text-indigo-700 border-b-2 border-indigo-200 pb-2">Quick Links</h3>
           <ul>
-            <li className="mb-2"><Link to="/patients" className="text-blue-500 hover:underline">View Patients</Link></li>
-            <li className="mb-2"><Link to="/doctors" className="text-blue-500 hover:underline">View Doctors</Link></li>
-            <li className="mb-2"><Link to="/appointments" className="text-blue-500 hover:underline">View Appointments</Link></li>
-            <li className="mb-2"><Link to="/prescriptions" className="text-blue-500 hover:underline">View Prescriptions</Link></li>
-            <li className="mb-2"><Link to="/medical-records" className="text-blue-500 hover:underline">View Medical Records</Link></li>
-            <li className="mb-2"><Link to="/departments" className="text-blue-500 hover:underline">View Departments</Link></li>
-            <li className="mb-2"><Link to="/staff" className="text-blue-500 hover:underline">View Staff</Link></li>
-            {/* Add more links */}
+            <li className="mb-2"><Link to="/patients" className="text-indigo-600 hover:underline">View Patients</Link></li>
+            <li className="mb-2"><Link to="/doctors" className="text-teal-600 hover:underline">View Doctors</Link></li>
+            <li className="mb-2"><Link to="/appointments" className="text-purple-600 hover:underline">View Appointments</Link></li>
+            <li className="mb-2"><Link to="/prescriptions" className="text-pink-600 hover:underline">View Prescriptions</Link></li>
+            <li className="mb-2"><Link to="/medical-records" className="text-blue-700 hover:underline">View Medical Records</Link></li>
+            <li className="mb-2"><Link to="/departments" className="text-green-600 hover:underline">View Departments</Link></li>
+            <li className="mb-2"><Link to="/staff" className="text-orange-600 hover:underline">View Staff</Link></li>
           </ul>
         </div>
-        <div className="p-6 border rounded-lg shadow-sm bg-white">
-          <h3 className="text-xl font-semibold mb-2">Today's Overview</h3>
-          <p className="text-3xl font-bold">15</p>
-          <p className="text-gray-500">New Patients</p>
+        <div className="p-6 border rounded-lg shadow-xl bg-white transition-transform hover:-translate-y-2" style={{ borderLeft: '5px solid #4F46E5' /* Indigo-600 */ }}>
+          <h3 className="text-2xl font-bold mb-2 text-gray-800">Today's Overview</h3>
+          <p className="text-5xl font-bold text-indigo-600">15</p>
+          <p className="text-gray-500 text-lg mt-2">New Patients</p>
         </div>
-        <div className="p-6 border rounded-lg shadow-sm bg-white">
-          <h3 className="text-xl font-semibold mb-2">Appointments</h3>
-          <p className="text-3xl font-bold">42</p>
-          <p className="text-gray-500">Scheduled Today</p>
+        <div className="p-6 border rounded-lg shadow-xl bg-white transition-transform hover:-translate-y-2" style={{ borderLeft: '5px solid #14B8A6' /* Teal-500 */ }}>
+          <h3 className="text-2xl font-bold mb-2 text-gray-800">Appointments</h3>
+          <p className="text-5xl font-bold text-teal-500">42</p>
+          <p className="text-gray-500 text-lg mt-2">Scheduled Today</p>
         </div>
       </div>
     </div>
