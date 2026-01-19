@@ -17,7 +17,9 @@ def create_app():
     # Initialize extensions
     db.init_app(app)
     configure_login_manager(app) # Configure Flask-Login
-    cors.init_app(app, resources={r"/api/*": {"origins": "*"}}) # Initialize CORS with app, allow all origins for development
+    # Initialize CORS with app, allow all origins for development
+    # In production, restrict CORS_ORIGINS to your frontend domain
+    cors.init_app(app, resources={r"/api/*": {"origins": "*"}}) 
 
     # Initialize Flask-Migrate
     migrate = Migrate(app, db)
