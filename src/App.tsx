@@ -6,7 +6,7 @@ function App() {
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow-md p-4">
         <nav className="container mx-auto flex items-center justify-between">
-          <div className="text-2xl font-bold text-blue-600">
+          <div className="text-xl font-bold text-blue-600">
             Hospital Management
           </div>
           <ul className="flex space-x-4">
@@ -18,6 +18,11 @@ function App() {
             <li>
               <Button variant="link" asChild>
                 <Link to="/patients">Patients</Link>
+              </Button>
+            </li>
+            <li>
+              <Button variant="link" asChild>
+                <Link to="/doctors">Doctors</Link>
               </Button>
             </li>
             {/* Add other navigation links here */}
@@ -38,6 +43,7 @@ function App() {
 import { createBrowserRouter } from "react-router-dom";
 import Index from "./pages/Index";
 import Patients from "./pages/Patients";
+import Doctors from "./pages/Doctors"; // Import the Doctors component
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +52,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Index /> },
       { path: "patients", element: <Patients /> },
+      { path: "doctors", element: <Doctors /> }, // Add the route for Doctors
       // Add other routes here
     ],
   },

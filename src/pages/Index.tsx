@@ -12,7 +12,9 @@ export default function Index() {
         <Button size="lg" asChild>
           <Link to="/patients">Manage Patients</Link>
         </Button>
-        {/* Add more buttons for other modules as they are created */}
+        <Button size="lg" asChild>
+          <Link to="/doctors">Manage Doctors</Link>
+        </Button>
         <Button size="lg" variant="outline">
           Schedule Appointment
         </Button>
@@ -23,6 +25,7 @@ export default function Index() {
           <h3 className="text-xl font-semibold mb-2">Quick Links</h3>
           <ul>
             <li className="mb-2"><Link to="/patients" className="text-blue-500 hover:underline">View Patients</Link></li>
+            <li className="mb-2"><Link to="/doctors" className="text-blue-500 hover:underline">View Doctors</Link></li>
             {/* Add more links */}
           </ul>
         </div>
