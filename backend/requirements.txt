@@ -1,0 +1,8 @@
+Flask
+Flask-SQLAlchemy
+Flask-Migrate
+Werkzeug
+Flask-Login
+Flask-Cors
+python-dotenv
+# Add other dependencies as needed, e.g., for Celery, Redis, email
