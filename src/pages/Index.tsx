@@ -15,8 +15,11 @@ export default function Index() {
         <Button size="lg" asChild>
           <Link to="/doctors">Manage Doctors</Link>
         </Button>
+        <Button size="lg" asChild>
+          <Link to="/appointments">Schedule Appointment</Link>
+        </Button>
         <Button size="lg" variant="outline">
-          Schedule Appointment
+          View Reports
         </Button>
       </div>
       <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
@@ -26,6 +29,7 @@ export default function Index() {
           <ul>
             <li className="mb-2"><Link to="/patients" className="text-blue-500 hover:underline">View Patients</Link></li>
             <li className="mb-2"><Link to="/doctors" className="text-blue-500 hover:underline">View Doctors</Link></li>
+            <li className="mb-2"><Link to="/appointments" className="text-blue-500 hover:underline">View Appointments</Link></li>
             {/* Add more links */}
           </ul>
         </div>

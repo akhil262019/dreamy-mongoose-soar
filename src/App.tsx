@@ -25,6 +25,11 @@ function App() {
                 <Link to="/doctors">Doctors</Link>
               </Button>
             </li>
+            <li>
+              <Button variant="link" asChild>
+                <Link to="/appointments">Appointments</Link>
+              </Button>
+            </li>
             {/* Add other navigation links here */}
           </ul>
         </nav>
@@ -43,7 +48,8 @@ function App() {
 import { createBrowserRouter } from "react-router-dom";
 import Index from "./pages/Index";
 import Patients from "./pages/Patients";
-import Doctors from "./pages/Doctors"; // Import the Doctors component
+import Doctors from "./pages/Doctors";
+import Appointments from "./pages/Appointments"; // Import the Appointments component
 
 export const router = createBrowserRouter([
   {
@@ -52,7 +58,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Index /> },
       { path: "patients", element: <Patients /> },
-      { path: "doctors", element: <Doctors /> }, // Add the route for Doctors
+      { path: "doctors", element: <Doctors /> },
+      { path: "appointments", element: <Appointments /> }, // Add the route for Appointments
       // Add other routes here
     ],
   },
