@@ -51,6 +51,11 @@ function App() {
               </Button>
             </li>
             {/* Add other navigation links here */}
+            <li>
+              <Button variant="link" className="text-white hover:text-indigo-200">
+                <Link to="/login">Login</Link> {/* Link to login page */}
+              </Button>
+            </li>
           </ul>
         </nav>
       </header>
@@ -73,7 +78,15 @@ import Appointments from "./pages/Appointments";
 import Prescriptions from "./pages/Prescriptions";
 import MedicalRecords from "./pages/MedicalRecords";
 import Departments from "./pages/Departments";
-import StaffManagement from "./pages/StaffManagement"; // Import the StaffManagement component
+import StaffManagement from "./pages/StaffManagement";
+import LoginPage from "./pages/LoginPage"; // Import LoginPage
+
+// Placeholder components for dashboards
+const DoctorDashboard = () => <div><h1 className="text-2xl font-bold mb-4">Doctor Dashboard</h1><p>Welcome, Doctor!</p></div>;
+const PatientDashboard = () => <div><h1 className="text-2xl font-bold mb-4">Patient Dashboard</h1><p>Welcome, Patient!</p></div>;
+const AdminDashboard = () => <div><h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1><p>Welcome, Admin!</p></div>;
+const GeneralDashboard = () => <div><h1 className="text-2xl font-bold mb-4">General Dashboard</h1><p>Welcome!</p></div>;
+
 
 export const router = createBrowserRouter([
   {
@@ -87,8 +100,14 @@ export const router = createBrowserRouter([
       { path: "prescriptions", element: <Prescriptions /> },
       { path: "medical-records", element: <MedicalRecords /> },
       { path: "departments", element: <Departments /> },
-      { path: "staff", element: <StaffManagement /> }, // Add the route for Staff Management
-      // Add other routes here
+      { path: "staff", element: <StaffManagement /> },
+      { path: "login", element: <LoginPage /> }, // Route for login page
+
+      // Dashboard routes (these would typically be protected)
+      { path: "doctor-dashboard", element: <DoctorDashboard /> },
+      { path: "patient-dashboard", element: <PatientDashboard /> },
+      { path: "admin-dashboard", element: <AdminDashboard /> },
+      { path: "dashboard", element: <GeneralDashboard /> }, // Fallback dashboard
     ],
   },
 ]);
