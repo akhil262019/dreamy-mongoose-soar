@@ -15,8 +15,8 @@ const RegisterForm: React.FC = () => {
     e.preventDefault();
     console.log("Register attempt:", { username, password, role });
     // TODO: Implement actual registration logic
-    alert("Registration successful! Please log in.");
-    navigate("/login");
+    alert("Registration successful! You can now log in.");
+    navigate("/login"); // Navigate to login page after successful registration
   };
 
   return (
