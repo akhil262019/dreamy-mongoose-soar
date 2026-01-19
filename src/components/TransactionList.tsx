@@ -30,6 +30,12 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDelet
     return "text-red-600";
   };
 
+  const handleDeleteClick = (id: number) => {
+    if (window.confirm("Are you sure you want to delete this transaction?")) {
+      onDeleteTransaction(id);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -76,7 +82,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions, onDelet
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => onDeleteTransaction(transaction.id)}
+                      onClick={() => handleDeleteClick(transaction.id)} // Use confirmation handler
                       className="text-red-600 hover:text-red-800"
                     >
                       Delete

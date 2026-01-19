@@ -24,6 +24,13 @@ interface BudgetListProps {
 }
 
 const BudgetList: React.FC<BudgetListProps> = ({ budgets, onDeleteBudget, onEditBudget }) => {
+
+  const handleDeleteClick = (id: number) => {
+    if (window.confirm("Are you sure you want to delete this budget?")) {
+      onDeleteBudget(id);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -63,7 +70,7 @@ const BudgetList: React.FC<BudgetListProps> = ({ budgets, onDeleteBudget, onEdit
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => onDeleteBudget(budget.id)} // Call delete handler
+                      onClick={() => handleDeleteClick(budget.id)} // Use confirmation handler
                       className="text-red-600 hover:text-red-800"
                     >
                       Delete
