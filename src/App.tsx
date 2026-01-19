@@ -30,6 +30,11 @@ function App() {
                 <Link to="/appointments">Appointments</Link>
               </Button>
             </li>
+            <li>
+              <Button variant="link" asChild>
+                <Link to="/prescriptions">Prescriptions</Link>
+              </Button>
+            </li>
             {/* Add other navigation links here */}
           </ul>
         </nav>
@@ -49,7 +54,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Index from "./pages/Index";
 import Patients from "./pages/Patients";
 import Doctors from "./pages/Doctors";
-import Appointments from "./pages/Appointments"; // Import the Appointments component
+import Appointments from "./pages/Appointments";
+import Prescriptions from "./pages/Prescriptions"; // Import the Prescriptions component
 
 export const router = createBrowserRouter([
   {
@@ -59,7 +65,8 @@ export const router = createBrowserRouter([
       { index: true, element: <Index /> },
       { path: "patients", element: <Patients /> },
       { path: "doctors", element: <Doctors /> },
-      { path: "appointments", element: <Appointments /> }, // Add the route for Appointments
+      { path: "appointments", element: <Appointments /> },
+      { path: "prescriptions", element: <Prescriptions /> }, // Add the route for Prescriptions
       // Add other routes here
     ],
   },
