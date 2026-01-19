@@ -45,6 +45,11 @@ function App() {
                 <Link to="/departments">Departments</Link>
               </Button>
             </li>
+            <li>
+              <Button variant="link" asChild>
+                <Link to="/staff">Staff Management</Link>
+              </Button>
+            </li>
             {/* Add other navigation links here */}
           </ul>
         </nav>
@@ -67,7 +72,8 @@ import Doctors from "./pages/Doctors";
 import Appointments from "./pages/Appointments";
 import Prescriptions from "./pages/Prescriptions";
 import MedicalRecords from "./pages/MedicalRecords";
-import Departments from "./pages/Departments"; // Import the Departments component
+import Departments from "./pages/Departments";
+import StaffManagement from "./pages/StaffManagement"; // Import the StaffManagement component
 
 export const router = createBrowserRouter([
   {
@@ -80,7 +86,8 @@ export const router = createBrowserRouter([
       { path: "appointments", element: <Appointments /> },
       { path: "prescriptions", element: <Prescriptions /> },
       { path: "medical-records", element: <MedicalRecords /> },
-      { path: "departments", element: <Departments /> }, // Add the route for Departments
+      { path: "departments", element: <Departments /> },
+      { path: "staff", element: <StaffManagement /> }, // Add the route for Staff Management
       // Add other routes here
     ],
   },

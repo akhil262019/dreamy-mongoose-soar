@@ -27,6 +27,9 @@ export default function Index() {
         <Button size="lg" asChild>
           <Link to="/departments">Manage Departments</Link>
         </Button>
+        <Button size="lg" asChild>
+          <Link to="/staff">Manage Staff</Link>
+        </Button>
         <Button size="lg" variant="outline">
           View Reports
         </Button>
@@ -42,6 +45,7 @@ export default function Index() {
             <li className="mb-2"><Link to="/prescriptions" className="text-blue-500 hover:underline">View Prescriptions</Link></li>
             <li className="mb-2"><Link to="/medical-records" className="text-blue-500 hover:underline">View Medical Records</Link></li>
             <li className="mb-2"><Link to="/departments" className="text-blue-500 hover:underline">View Departments</Link></li>
+            <li className="mb-2"><Link to="/staff" className="text-blue-500 hover:underline">View Staff</Link></li>
             {/* Add more links */}
           </ul>
         </div>
