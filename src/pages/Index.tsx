@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 export default function Index() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] text-center p-4 bg-gradient-to-br from-blue-50 to-purple-50">
-      <h1 className="text-5xl font-extrabold mb-4 text-indigo-700 animate-fade-in-up">
+      <h1 className="text-5xl font-extrabold mb-4 text-indigo-700">
         Welcome to the Hospital Management System
       </h1>
-      <p className="text-lg text-gray-700 mb-8 max-w-2xl animate-fade-in-up animation-delay-200">
+      <p className="text-lg text-gray-700 mb-8 max-w-2xl">
         Manage patients, appointments, doctors, and more with ease. Our intuitive interface and robust features ensure efficient healthcare management.
       </p>
-      <div className="flex flex-wrap justify-center space-x-4 gap-4 mb-12 animate-fade-in-up animation-delay-400">
+      <div className="flex flex-wrap justify-center space-x-4 gap-4 mb-12">
         <Button size="lg" asChild className="bg-indigo-600 hover:bg-indigo-700 hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out">
           <Link to="/patients">Manage Patients</Link>
         </Button>
